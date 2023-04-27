@@ -56,7 +56,7 @@ const detectPose = async () => {
   const poseList = poses[0]?.keypoints || [];
   console.log("poseList", poseList);
   // 绘制
-  ctx.drawImage(canvasOutput, 0, 0, canvas.width, canvas.height);
+  ctx.drawImage(videoInput, 0, 0, canvas.width, canvas.height);
 
   poseList.forEach(({ x, y, score }) => {
     if (score > 0.5) {
@@ -64,22 +64,22 @@ const detectPose = async () => {
       drawPoint(x, y, 5, "#f00000", ctx);
     }
     // test
-    drawPoint(x, y, 5, "#f00000", ctx);
+    // drawPoint(x, y, 5, "#f00000", ctx);
   });
 
   // 获取相邻的关节点信息
   const adjPairs = poseDetection.util.getAdjacentPairs(model);
   console.log("adjPairs", adjPairs);
   adjPairs.forEach((item) => {
-    const keyPoint1 = item[0];
-    const keyPoint2 = item[1];
-    const score1 = poseList[keyPoint1]?.score;
-    const score2 = poseList[keyPoint2]?.score;
+    const keyPoint1 = poseList[item[0]];
+    const keyPoint2 = poseList[item[1]];
+    const score1 = keyPoint1.score;
+    const score2 = keyPoint2.score;
     if (score1 > 0.5 && score2 > 0.5) {
       drawLine(keyPoint1, keyPoint2, "aqua", ctx);
     }
     // test
-    drawLine(keyPoint1, keyPoint2, "black", ctx);
+    // drawLine(keyPoint1, keyPoint2, "black", ctx);
   });
 
   requestAnimationFrame(() => detectPose());

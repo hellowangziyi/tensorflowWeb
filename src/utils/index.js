@@ -6,6 +6,7 @@ export function drawPoint(x, y, r, color, ctx) {
 }
 
 export function drawLine(startPoint, endPoint, color, ctx) {
+  console.log("startPoint", startPoint, "endPoint", endPoint);
   const { x: x1, y: y1 } = startPoint;
   const { x: x2, y: y2 } = endPoint;
   ctx.beginPath();
